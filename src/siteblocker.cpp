@@ -1,4 +1,4 @@
-#include "siteblocker.h"
+#include "../headers/siteblocker.h"
 #include "ui_siteblocker.h"
 #include <DApplication>
 #include <iostream>
