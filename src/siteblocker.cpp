@@ -22,7 +22,7 @@ siteblocker::siteblocker(QWidget *parent) :
     QString website;
     string oldwebsite;
     ifstream host("/etc/hosts");
-    ofstream backup("hosts backup lines.txt");
+    ofstream backup("/tmp/hosts backup lines.txt");
     while (getline(host, line)) {
         stringstream hosts(line);
         hosts >> temp[0];
@@ -76,7 +76,7 @@ void siteblocker::on_pushButton_2_clicked()
     bool success;
     string line;
     ofstream host("/etc/hosts");
-    ifstream backup("hosts backup lines.txt");
+    ifstream backup("/tmp/hosts backup lines.txt");
     while (getline(backup, line)) {
         if(host << line << endl){
             success = true;
