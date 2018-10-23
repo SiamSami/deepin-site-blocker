@@ -7,7 +7,7 @@
 #include <sstream>
 #include <QListWidgetItem>
 using namespace std;
-int storage = 1;
+//int storage = 1;
 QListWidgetItem* item[100];
 string backuplines;
 int itemNum = 0;
@@ -21,14 +21,34 @@ siteblocker::siteblocker(QWidget *parent) :
     string temp[2];
     QString website;
     string oldwebsite;
+    bool unCheckedWebsite = false;
+#ifdef Q_OS_LINUX
     ifstream host("/etc/hosts");
     ofstream backup("/tmp/hosts backup lines.txt");
+#endif
     while (getline(host, line)) {
         stringstream hosts(line);
         hosts >> temp[0];
-        if(temp[0] != "127.0.0.1" || line == "127.0.0.1\tlocalhost"){
+        cout << temp[0] << endl;
+        if(temp[0] != "127.0.0.1"){      // || line == "127.0.0.1\tlocalhost"
+            if(temp[0] == "#127.0.0.1"){
+                hosts >> temp[1];
+                if(temp[1] != oldwebsite && temp[1] != "localhost"){
+                    oldwebsite = temp[1];
+                    website = QString(temp[1].c_str());
+                    item[itemNum] = new QListWidgetItem(website, ui->listWidget);
+                    selectedWebsites[itemNum] = website;
+                    item[itemNum]->setFlags(item[itemNum]->flags() | Qt::ItemIsUserCheckable);
+                    item[itemNum]->setCheckState(Qt::Unchecked);
+                    itemNum++;
+                    unCheckedWebsite = true;
+            }
+                if(!unCheckedWebsite){
            backup << line << endl;
+                }
+            }
         }else{
+            unCheckedWebsite = false;
             hosts >> temp[1];
             if(temp[1] != oldwebsite && temp[1] != "localhost"){
                 oldwebsite = temp[1];
@@ -41,7 +61,6 @@ siteblocker::siteblocker(QWidget *parent) :
             }
        }
      }
-    cout << itemNum << endl;
     host.close();
     backup.close();
 }
@@ -55,7 +74,7 @@ QString textofline;
 
 void siteblocker::on_pushButton_clicked()
 {
-    if(ui->lineEdit->text() != NULL){
+    if(ui->lineEdit->text() != nullptr){
     textofline = ui->lineEdit->text();
 
     item[itemNum] = new QListWidgetItem(textofline, ui->listWidget);
@@ -64,6 +83,7 @@ void siteblocker::on_pushButton_clicked()
     item[itemNum]->setCheckState(Qt::Checked);
     itemNum++;
     }
+    ui->lineEdit->setText("");
     
 }
 
@@ -73,10 +93,12 @@ void listWidgets(){
 
 void siteblocker::on_pushButton_2_clicked()
 {
-    bool success;
+    bool success = false;
     string line;
+#ifdef Q_OS_LINUX
     ofstream host("/etc/hosts");
     ifstream backup("/tmp/hosts backup lines.txt");
+#endif
     while (getline(backup, line)) {
         if(host << line << endl){
             success = true;
@@ -104,7 +126,7 @@ void siteblocker::on_pushButton_2_clicked()
         }else{
             QMessageBox undone;
             undone.setWindowTitle("Message");
-            undone.setText("For some reason, it failed :(");
+            undone.setText("You should be root to do it.");
             undone.setStandardButtons(QMessageBox::Ok);
             undone.exec();
 
