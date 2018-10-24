@@ -26,6 +26,10 @@ siteblocker::siteblocker(QWidget *parent) :
     ifstream host("/etc/hosts");
     ofstream backup("/tmp/hosts backup lines.txt");
 #endif
+#ifdef Q_OS_WIN
+    ifstream host("C:\\Windows\\System32\\Drivers\\etc\\hosts");
+    ofstream backup("C:\\Temp\\hosts backup lines.txt");
+#endif
     while (getline(host, line)) {
         stringstream hosts(line);
         hosts >> temp[0];
@@ -98,6 +102,10 @@ void siteblocker::on_pushButton_2_clicked()
 #ifdef Q_OS_LINUX
     ofstream host("/etc/hosts");
     ifstream backup("/tmp/hosts backup lines.txt");
+#endif
+#ifdef Q_OS_WIN
+    ofstream host("C:\\Windows\\System32\\Drivers\\etc\\hosts");
+    ifstream backup("C:\\Temp\\hosts backup lines.txt");
 #endif
     while (getline(backup, line)) {
         if(host << line << endl){
