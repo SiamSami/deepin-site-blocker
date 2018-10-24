@@ -4,12 +4,12 @@
 #
 #-------------------------------------------------
 
-QT += core gui widgets svg
-CONFIG += c++14 link_pkgconfig
+QT += core gui widgets
+CONFIG += c++11 static link_pkgconfig
 PKGCONFIG += dtkwidget
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = deepin-site-blocker
+TARGET = site-blocker
 TEMPLATE = app
 
 # The following define makes your compiler emit warnings if you use
