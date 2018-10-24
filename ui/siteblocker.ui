@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>469</width>
-    <height>308</height>
+    <height>320</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,14 +20,14 @@
    <widget class="QPushButton" name="pushButton">
     <property name="geometry">
      <rect>
-      <x>320</x>
+      <x>290</x>
       <y>230</y>
-      <width>111</width>
+      <width>151</width>
       <height>25</height>
      </rect>
     </property>
     <property name="text">
-     <string>Add a website</string>
+     <string>Add website to the list</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="lineEdit">
@@ -42,25 +42,37 @@
     <property name="text">
      <string/>
     </property>
+    <property name="frame">
+     <bool>true</bool>
+    </property>
     <property name="placeholderText">
      <string/>
+    </property>
+    <property name="clearButtonEnabled">
+     <bool>false</bool>
     </property>
    </widget>
    <widget class="QListWidget" name="listWidget">
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>30</y>
+      <y>10</y>
       <width>256</width>
       <height>192</height>
      </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::Box</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Plain</enum>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_2">
     <property name="geometry">
      <rect>
-      <x>300</x>
-      <y>60</y>
+      <x>290</x>
+      <y>50</y>
       <width>151</width>
       <height>31</height>
      </rect>
