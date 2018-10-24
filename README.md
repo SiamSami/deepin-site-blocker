@@ -1,4 +1,4 @@
-# site-blocker
+# Site blocker
 This is a program which helps us to block websites easily.
 
 # Written in:
