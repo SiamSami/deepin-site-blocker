@@ -21,7 +21,7 @@ siteblocker::siteblocker(QWidget *parent) :
     string temp[2];
     QString website;
     string oldwebsite;
-    bool unCheckedWebsite = false;
+//    bool shouldBackup = true;
 #ifdef Q_OS_LINUX
     ifstream host("/etc/hosts");
     ofstream backup("/tmp/hosts backup lines.txt");
@@ -34,7 +34,7 @@ siteblocker::siteblocker(QWidget *parent) :
         stringstream hosts(line);
         hosts >> temp[0];
         cout << temp[0] << endl;
-        if(temp[0] != "127.0.0.1"){      // || line == "127.0.0.1\tlocalhost"
+        if(temp[0] != "127.0.0.1"){
             if(temp[0] == "#127.0.0.1"){
                 hosts >> temp[1];
                 if(temp[1] != oldwebsite && temp[1] != "localhost"){
@@ -45,15 +45,15 @@ siteblocker::siteblocker(QWidget *parent) :
                     item[itemNum]->setFlags(item[itemNum]->flags() | Qt::ItemIsUserCheckable);
                     item[itemNum]->setCheckState(Qt::Unchecked);
                     itemNum++;
-                    unCheckedWebsite = true;
-            }
-                if(!unCheckedWebsite){
-           backup << line << endl;
-                }
+                    //shouldBackup = false;
+            }else{
+                    backup << line << endl;
+              }
             }
         }else{
-            unCheckedWebsite = false;
+
             hosts >> temp[1];
+
             if(temp[1] != oldwebsite && temp[1] != "localhost"){
                 oldwebsite = temp[1];
                 website = QString(temp[1].c_str());
@@ -62,9 +62,10 @@ siteblocker::siteblocker(QWidget *parent) :
                 item[itemNum]->setFlags(item[itemNum]->flags() | Qt::ItemIsUserCheckable);
                 item[itemNum]->setCheckState(Qt::Checked);
                 itemNum++;
-            }
        }
      }
+
+    }
     host.close();
     backup.close();
 }
@@ -140,4 +141,9 @@ void siteblocker::on_pushButton_2_clicked()
 
         }
         host.close();
+}
+
+void siteblocker::on_lineEdit_returnPressed()
+{
+    siteblocker::on_pushButton_clicked();
 }
