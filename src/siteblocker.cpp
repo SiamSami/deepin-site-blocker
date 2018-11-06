@@ -17,6 +17,13 @@ siteblocker::siteblocker(QWidget *parent) :
     ui(new Ui::siteblocker)
 {
     ui->setupUi(this);
+    this->setCentralWidget(ui->widget);
+    ui->pushButton->setFont(QFont("droid sans", 9));
+    siteblocker::setFont(QFont("droid sans", 9));
+    ui->pushButton_2->setFont(QFont("droid sans", 9));
+    ui->lineEdit->setFont(QFont("droid sans", 9));
+    ui->lineEdit->setPlaceholderText("Enter a website e.g. www.example.com");
+    ui->listWidget->setFont(QFont("droid sans", 9));
     string line;
     string temp[2];
     QString website;
@@ -28,7 +35,7 @@ siteblocker::siteblocker(QWidget *parent) :
 #endif
 #ifdef Q_OS_WIN
     ifstream host("C:\\Windows\\System32\\Drivers\\etc\\hosts");
-    ofstream backup("C:\\Temp\\hosts backup lines.txt");
+    ofstream backup("C:\\Temp\\hostsbackuplines.txt");
 #endif
     while (getline(host, line)) {
         stringstream hosts(line);
@@ -106,7 +113,7 @@ void siteblocker::on_pushButton_2_clicked()
 #endif
 #ifdef Q_OS_WIN
     ofstream host("C:\\Windows\\System32\\Drivers\\etc\\hosts");
-    ifstream backup("C:\\Temp\\hosts backup lines.txt");
+    ifstream backup("C:\\Temp\\hostsbackuplines.txt");
 #endif
     while (getline(backup, line)) {
         if(host << line << endl){
