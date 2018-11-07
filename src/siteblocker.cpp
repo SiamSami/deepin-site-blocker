@@ -58,7 +58,7 @@ siteblocker::siteblocker(QWidget *parent) :
               }
             }
         }else{
-
+            backup << line << endl;
             hosts >> temp[1];
 
             if(temp[1] != oldwebsite && temp[1] != "localhost"){
