@@ -1,6 +1,6 @@
 #include "../headers/siteblocker.h"
 #include "ui_siteblocker.h"
-#include <DApplication>
+#include <QApplication>
 #include <iostream>
 #include <QMessageBox>
 #include <fstream>
@@ -13,7 +13,7 @@ string backuplines;
 int itemNum = 0;
 QString selectedWebsites[100];
 siteblocker::siteblocker(QWidget *parent) :
-    DMainWindow(parent),
+    QMainWindow(parent),
     ui(new Ui::siteblocker)
 {
     ui->setupUi(this);
@@ -31,7 +31,7 @@ siteblocker::siteblocker(QWidget *parent) :
 //    bool shouldBackup = true;
 #ifdef Q_OS_LINUX
     ifstream host("/etc/hosts");
-    ofstream backup("/tmp/hosts backup lines.txt");
+    ofstream backup("/tmp/hostsbackuplines.txt");
 #endif
 #ifdef Q_OS_WIN
     ifstream host("C:\\Windows\\System32\\Drivers\\etc\\hosts");
@@ -42,8 +42,9 @@ siteblocker::siteblocker(QWidget *parent) :
         hosts >> temp[0];
         cout << temp[0] << endl;
         if(temp[0] != "127.0.0.1"){
+            hosts >> temp[1];
+            backup << line << endl;
             if(temp[0] == "#127.0.0.1"){
-                hosts >> temp[1];
                 if(temp[1] != oldwebsite && temp[1] != "localhost"){
                     oldwebsite = temp[1];
                     website = QString(temp[1].c_str());
@@ -53,12 +54,9 @@ siteblocker::siteblocker(QWidget *parent) :
                     item[itemNum]->setCheckState(Qt::Unchecked);
                     itemNum++;
                     //shouldBackup = false;
-            }else{
-                    backup << line << endl;
-              }
+            }
             }
         }else{
-            backup << line << endl;
             hosts >> temp[1];
 
             if(temp[1] != oldwebsite && temp[1] != "localhost"){
@@ -108,8 +106,10 @@ void siteblocker::on_pushButton_2_clicked()
     bool success = false;
     string line;
 #ifdef Q_OS_LINUX
-    ofstream host("/etc/hosts");
-    ifstream backup("/tmp/hosts backup lines.txt");
+    ofstream host;
+    host.open("/etc/hosts");
+    ifstream backup;
+    backup.open("/tmp/hostsbackuplines.txt");
 #endif
 #ifdef Q_OS_WIN
     ofstream host("C:\\Windows\\System32\\Drivers\\etc\\hosts");
@@ -148,6 +148,7 @@ void siteblocker::on_pushButton_2_clicked()
 
         }
         host.close();
+        backup.close();
 }
 
 void siteblocker::on_lineEdit_returnPressed()
