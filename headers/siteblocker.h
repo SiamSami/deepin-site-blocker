@@ -14,13 +14,15 @@ class siteblocker : public DMainWindow
     Q_OBJECT
 
 public:
-    explicit siteblocker(QWidget *parent = 0);
+    explicit siteblocker(QWidget *parent = nullptr);
     ~siteblocker();
 
 private slots:
     void on_pushButton_clicked();
 
     void on_pushButton_2_clicked();
+
+    void on_lineEdit_returnPressed();
 
 private:
     Ui::siteblocker *ui;
