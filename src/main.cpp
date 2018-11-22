@@ -14,16 +14,18 @@ int main(int argc, char *argv[])
     DApplication a(argc, argv);
     a.setWindowIcon(QIcon("/home/toor/Desktop/Programming/deepin-site-blocker-beta/drawing.svg"));
     a.setApplicationName("Site blocker");
+    a.setStyle("dlight");
     a.setApplicationVersion("1.0");
     a.setFont(QFont("droid sans", 9));
     a.setOrganizationDomain("www.test.com");
-    a.setProductIcon(QIcon("/home/toor/Desktop/Programming/deepin-site-blocker-beta/drawing.svg"));
+    /*a.setProductIcon(QIcon("/home/toor/Desktop/Programming/deepin-site-blocker-beta/drawing.svg"));
     a.setApplicationDescription("It is a simple site blocking program written in DTK (Deepin Tool Kit) & Qt");
     a.setProductIcon(QIcon("/home/toor/Desktop/Programming/deepin-site-blocker-beta/drawing.svg"));
     a.setProductName("Site blocker");
     a.setApplicationLicense("GNU GPL 3");
     a.setApplicationHomePage("https://github.com/SiamSami/site-blocker");
-    a.setApplicationAcknowledgementPage("https://github.com/SiamSami/site-blocker");
+    a.setApplicationAcknowledgementPage("https://github.com/SiamSami/site-blocker");*/
+
 #ifdef Q_OS_LINUX
     if(geteuid() == 0){
         std::cout << "You are root\n";
