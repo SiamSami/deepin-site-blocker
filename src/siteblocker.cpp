@@ -1,29 +1,31 @@
 #include "../headers/siteblocker.h"
 #include "ui_siteblocker.h"
-#include <QApplication>
+#include <DApplication>
 #include <iostream>
 #include <QMessageBox>
 #include <fstream>
 #include <sstream>
 #include <QListWidgetItem>
 using namespace std;
-//int storage = 1;
 QListWidgetItem* item[100];
 string backuplines;
 int itemNum = 0;
 QString selectedWebsites[100];
 siteblocker::siteblocker(QWidget *parent) :
-    QMainWindow(parent),
+    DMainWindow(parent),
     ui(new Ui::siteblocker)
 {
     ui->setupUi(this);
-    this->setCentralWidget(ui->widget);
-    ui->pushButton->setFont(QFont("droid sans", 9));
-    siteblocker::setFont(QFont("droid sans", 9));
-    ui->pushButton_2->setFont(QFont("droid sans", 9));
-    ui->lineEdit->setFont(QFont("droid sans", 9));
+    this->setCentralWidget(ui->gridLayoutWidget);
+    QFont font;
+    font.setFamily("droid sans");
+    font.setPointSize(9);
+    ui->pushButton->setFont(font);
+    siteblocker::setFont(font);
+    ui->pushButton_2->setFont(font);
+    ui->lineEdit->setFont(font);
     ui->lineEdit->setPlaceholderText("Enter a website e.g. www.example.com");
-    ui->listWidget->setFont(QFont("droid sans", 9));
+    ui->listWidget->setFont(font);
     string line;
     string temp[2];
     QString website;
@@ -133,18 +135,21 @@ void siteblocker::on_pushButton_2_clicked()
             }
         }
     }
+    QFont font;
+    font.setPointSize(9);
+    font.setFamily("droid sans");
+    font.setBold(false);
+    QMessageBox message;
+    message.setWindowTitle("Message");
+    message.setStyleSheet("QLabel{min-width: 200px}");
+    message.setFont(font);
+    message.setStandardButtons(QMessageBox::Ok);
         if(success){
-            QMessageBox done;
-            done.setWindowTitle("Message");
-            done.setText("Done");
-            done.setStandardButtons(QMessageBox::Ok);
-            done.exec();
+            message.setText("      Done");
+            message.exec();
         }else{
-            QMessageBox undone;
-            undone.setWindowTitle("Message");
-            undone.setText("You should be root to do it.");
-            undone.setStandardButtons(QMessageBox::Ok);
-            undone.exec();
+            message.setText("You should be root to do it.");
+            message.exec();
 
         }
         host.close();
