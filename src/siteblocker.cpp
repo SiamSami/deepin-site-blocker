@@ -140,15 +140,17 @@ void siteblocker::on_pushButton_2_clicked()
     font.setFamily("droid sans");
     font.setBold(false);
     QMessageBox message;
-    message.setWindowTitle("Message");
-    message.setStyleSheet("QLabel{min-width: 200px}");
+    message.setStyleSheet("QLabel{min-width: 250px}");
     message.setFont(font);
     message.setStandardButtons(QMessageBox::Ok);
         if(success){
-            message.setText("      Done");
+            message.setWindowTitle("Success");
+            message.setText("\tDone");
             message.exec();
         }else{
-            message.setText("You should be root to do it.");
+            message.setWindowTitle("Failed");
+            message.setText("\nYou should be have administrative privileges");
+            message.setIcon(QMessageBox::Icon::Critical);
             message.exec();
 
         }
