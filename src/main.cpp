@@ -1,6 +1,8 @@
 #include "../headers/siteblocker.h"
 #include <DApplication>
+#include <DAboutDialog>
 #include <unistd.h>
+#include <DWidgetUtil>
 #include <QMessageBox>
 #include <iostream>
 #include <sys/types.h>
@@ -12,19 +14,22 @@ int main(int argc, char *argv[])
 
     DApplication::loadDXcbPlugin();
     DApplication a(argc, argv);
-    a.setWindowIcon(QIcon("/home/toor/Desktop/Programming/deepin-site-blocker-beta/drawing.svg"));
+    DAboutDialog dialog;
+    QFont font;
+    font.setFamily("droid sans");
+    font.setPointSize(9);
+    dialog.setWebsiteLink("https://github.com/SiamSami/site-blocker");
+    dialog.setFont(font);
+    dialog.setLicense("Licensed under GNU GPL 3");
+    dialog.setVersion("Version 1.0");
+    dialog.setProductName("Site blocker");
+    dialog.setWebsiteName("Made by Siam Sami");
+    dialog.setAcknowledgementVisible(false);
+    dialog.setCompanyLogo(QPixmap());
+    a.setAboutDialog(&dialog);
+    a.setFont(font);
     a.setApplicationName("Site blocker");
     a.setStyle("dlight");
-    a.setApplicationVersion("1.0");
-    a.setFont(QFont("droid sans", 9));
-    a.setOrganizationDomain("www.test.com");
-    /*a.setProductIcon(QIcon("/home/toor/Desktop/Programming/deepin-site-blocker-beta/drawing.svg"));
-    a.setApplicationDescription("It is a simple site blocking program written in DTK (Deepin Tool Kit) & Qt");
-    a.setProductIcon(QIcon("/home/toor/Desktop/Programming/deepin-site-blocker-beta/drawing.svg"));
-    a.setProductName("Site blocker");
-    a.setApplicationLicense("GNU GPL 3");
-    a.setApplicationHomePage("https://github.com/SiamSami/site-blocker");
-    a.setApplicationAcknowledgementPage("https://github.com/SiamSami/site-blocker");*/
 
 #ifdef Q_OS_LINUX
     if(geteuid() == 0){
