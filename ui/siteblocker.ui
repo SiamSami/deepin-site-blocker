@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>432</width>
-    <height>361</height>
+    <height>432</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -23,11 +23,11 @@
       <x>0</x>
       <y>0</y>
       <width>431</width>
-      <height>361</height>
+      <height>431</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout">
-     <item row="5" column="0">
+     <item row="4" column="1">
       <spacer name="verticalSpacer">
        <property name="orientation">
         <enum>Qt::Vertical</enum>
@@ -40,7 +40,7 @@
        </property>
       </spacer>
      </item>
-     <item row="0" column="0">
+     <item row="0" column="1">
       <spacer name="verticalSpacer_2">
        <property name="orientation">
         <enum>Qt::Vertical</enum>
@@ -53,45 +53,8 @@
        </property>
       </spacer>
      </item>
-     <item row="1" column="0" rowspan="2">
+     <item row="1" column="1" rowspan="3">
       <layout class="QGridLayout" name="gridLayout_2">
-       <item row="3" column="2">
-        <widget class="QPushButton" name="pushButton">
-         <property name="text">
-          <string>Add website to the list</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="2">
-        <widget class="QPushButton" name="pushButton_2">
-         <property name="text">
-          <string>Block selected websites</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="2">
-        <widget class="QListWidget" name="listWidget">
-         <property name="frameShape">
-          <enum>QFrame::Box</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Plain</enum>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="3">
-        <spacer name="horizontalSpacer_2">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>28</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
        <item row="2" column="2">
         <widget class="QLineEdit" name="lineEdit">
          <property name="text">
@@ -108,20 +71,69 @@
          </property>
         </widget>
        </item>
-       <item row="1" column="1">
-        <spacer name="horizontalSpacer">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
+       <item row="0" column="2" rowspan="2">
+        <widget class="QListWidget" name="listWidget">
+         <property name="frameShape">
+          <enum>QFrame::Box</enum>
          </property>
-         <property name="sizeHint" stdset="0">
+         <property name="frameShadow">
+          <enum>QFrame::Plain</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="2">
+        <widget class="QPushButton" name="pushButton">
+         <property name="text">
+          <string>Add website to the list</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="2">
+        <widget class="QPushButton" name="pushButton_2">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
           <size>
-           <width>18</width>
-           <height>20</height>
+           <width>0</width>
+           <height>27</height>
           </size>
          </property>
-        </spacer>
+         <property name="text">
+          <string>Block selected websites</string>
+         </property>
+        </widget>
        </item>
       </layout>
+     </item>
+     <item row="2" column="2">
+      <spacer name="horizontalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>28</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="1" column="0">
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>18</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
      </item>
     </layout>
    </widget>
