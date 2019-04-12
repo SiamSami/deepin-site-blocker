@@ -15,12 +15,14 @@ class siteblocker : public DMainWindow
 
 public:
     explicit siteblocker(QWidget *parent = nullptr);
+    void closeEvent(QCloseEvent *event);
     ~siteblocker();
 
 private slots:
     void on_pushButton_clicked();
 
     void on_pushButton_2_clicked();
+
 
     void on_lineEdit_returnPressed();
 
