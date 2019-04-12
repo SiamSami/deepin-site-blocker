@@ -1,15 +1,17 @@
 #include "../headers/siteblocker.h"
 #include "ui_siteblocker.h"
-#include <DApplication>
+#include <QApplication>
 #include <iostream>
 #include <QMessageBox>
 #include <fstream>
 #include <sstream>
+#include <QCloseEvent>
 #include <QListWidgetItem>
 using namespace std;
 QListWidgetItem* item[100];
 string backuplines;
 int itemNum = 0;
+bool saved = true;
 QString selectedWebsites[100];
 siteblocker::siteblocker(QWidget *parent) :
     DMainWindow(parent),
@@ -42,7 +44,6 @@ siteblocker::siteblocker(QWidget *parent) :
     while (getline(host, line)) {
         stringstream hosts(line);
         hosts >> temp[0];
-        cout << temp[0] << endl;
         if(temp[0] != "127.0.0.1"){
             hosts >> temp[1];
             backup << line << endl;
@@ -60,8 +61,13 @@ siteblocker::siteblocker(QWidget *parent) :
             }
         }else{
             hosts >> temp[1];
-
-            if(temp[1] != oldwebsite && temp[1] != "localhost"){
+            if(temp[1] == "www.redtube.com"){
+                backup << line << endl;
+            }
+            if(temp[1] == "www.xnxx.com"){
+                backup << line << endl;
+            }
+            if(temp[1] != oldwebsite && temp[1] != "localhost" && temp[1] != "www.redtube.com" && temp[1] != "www.xnxx.com"){
                 oldwebsite = temp[1];
                 website = QString(temp[1].c_str());
                 item[itemNum] = new QListWidgetItem(website, ui->listWidget);
@@ -82,10 +88,33 @@ siteblocker::~siteblocker()
     delete ui;
 }
 
+void siteblocker::closeEvent(QCloseEvent *event){
+    if(saved){
+        event->accept();
+    }else{
+        QMessageBox bt;
+        bt.setWindowTitle("Not saved");
+        bt.setIcon(QMessageBox::Icon::Warning);
+        bt.setText("You haven't saved the list. Would you like to save and close the program?");
+        bt.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+        bt.setDefaultButton(QMessageBox::Yes);
+        int buttons = bt.exec();
+        switch(buttons){
+        case QMessageBox::Yes:
+            siteblocker::on_pushButton_2_clicked();
+            break;
+        case QMessageBox::No:
+            event->accept();
+            break;
+        }
+    }
+}
+
 QString textofline;
 
 void siteblocker::on_pushButton_clicked()
 {
+
     if(ui->lineEdit->text() != nullptr){
     textofline = ui->lineEdit->text();
 
@@ -94,14 +123,12 @@ void siteblocker::on_pushButton_clicked()
     item[itemNum]->setFlags(item[itemNum]->flags() | Qt::ItemIsUserCheckable);
     item[itemNum]->setCheckState(Qt::Checked);
     itemNum++;
+    saved = false;
     }
     ui->lineEdit->setText("");
     
 }
 
-void listWidgets(){
-
-}
 
 void siteblocker::on_pushButton_2_clicked()
 {
@@ -140,22 +167,24 @@ void siteblocker::on_pushButton_2_clicked()
     font.setFamily("droid sans");
     font.setBold(false);
     QMessageBox message;
-    message.setStyleSheet("QLabel{min-width: 250px}");
     message.setFont(font);
     message.setStandardButtons(QMessageBox::Ok);
+    //message.setStyleSheet("QLabel{min-width:300 px;} QPushButton{ width:55px; font-size: 18px; }");
+
         if(success){
             message.setWindowTitle("Success");
-            message.setText("\tDone");
+            message.setText("Done");
             message.exec();
         }else{
             message.setWindowTitle("Failed");
-            message.setText("\nYou should be have administrative privileges");
+            message.setText("You should have administrative privileges to do so");
             message.setIcon(QMessageBox::Icon::Critical);
             message.exec();
 
         }
         host.close();
         backup.close();
+        saved = true;
 }
 
 void siteblocker::on_lineEdit_returnPressed()
